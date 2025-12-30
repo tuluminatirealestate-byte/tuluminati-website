@@ -115,6 +115,37 @@
             color: var(--black);
         }
 
+        /* Language Switcher */
+        .lang-switcher {
+            display: flex;
+            gap: 5px;
+            margin-left: 15px;
+        }
+        .lang-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: rgba(255,255,255,0.7);
+            padding: 5px 10px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+        .lang-btn:hover, .lang-btn.active {
+            background: var(--gold);
+            color: var(--black);
+            border-color: var(--gold);
+        }
+        .navbar.scrolled .lang-btn {
+            border-color: rgba(0,0,0,0.2);
+            color: rgba(0,0,0,0.6);
+        }
+        .navbar.scrolled .lang-btn:hover,
+        .navbar.scrolled .lang-btn.active {
+            background: var(--gold);
+            color: var(--black);
+        }
+
         /* Hero Section */
         .hero {
             height: 100vh;
@@ -1734,15 +1765,20 @@
     <nav id="navbar">
         <a href="#" class="logo">Tuluminati</a>
         <ul class="nav-links">
-            <li><a href="#destinations">Destinations</a></li>
-            <li><a href="#listings">Properties</a></li>
-            <li><a href="#beachfront">Beachfront</a></li>
-            <li><a href="#retirement">Retirement</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#financing">Financing</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="#destinations" data-i18n="nav.destinations">Destinations</a></li>
+            <li><a href="#listings" data-i18n="nav.properties">Properties</a></li>
+            <li><a href="#beachfront" data-i18n="nav.beachfront">Beachfront</a></li>
+            <li><a href="#retirement" data-i18n="nav.retirement">Retirement</a></li>
+            <li><a href="#services" data-i18n="nav.services">Services</a></li>
+            <li><a href="#financing" data-i18n="nav.financing">Financing</a></li>
+            <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
         </ul>
-        <a href="#contact" class="nav-contact">Schedule Visit</a>
+        <a href="#contact" class="nav-contact" data-i18n="nav.schedule">Schedule Visit</a>
+        <div class="lang-switcher">
+            <button class="lang-btn active" data-lang="en">EN</button>
+            <button class="lang-btn" data-lang="es">ES</button>
+            <button class="lang-btn" data-lang="fr">FR</button>
+        </div>
         <button class="menu-toggle">&#9776;</button>
     </nav>
 
@@ -1751,12 +1787,12 @@
         <div class="hero-bg"></div>
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <p class="hero-subtitle">Paradise in Mexico</p>
-            <h1>Where Caribbean Dreams Meet Smart Investment</h1>
-            <p class="hero-desc">Discover exceptional properties across Tulum, Playa del Carmen, Cancun, and the entire Riviera Maya. The Mexican Caribbean's #1 destination for international real estate investment.</p>
+            <p class="hero-subtitle" data-i18n="hero.subtitle">Paradise in Mexico</p>
+            <h1 data-i18n="hero.title">Where Caribbean Dreams Meet Smart Investment</h1>
+            <p class="hero-desc" data-i18n="hero.desc">Discover exceptional properties across Tulum, Playa del Carmen, Cancun, and the entire Riviera Maya. The Mexican Caribbean's #1 destination for international real estate investment.</p>
             <div class="hero-buttons">
-                <a href="#listings" class="btn btn-gold">Explore Properties</a>
-                <a href="#contact" class="btn btn-outline">Book Consultation</a>
+                <a href="#listings" class="btn btn-gold" data-i18n="hero.explore">Explore Properties</a>
+                <a href="#contact" class="btn btn-outline" data-i18n="hero.book">Book Consultation</a>
             </div>
         </div>
     </section>
@@ -2601,43 +2637,48 @@
         <div class="contact-grid">
             <div class="contact-info">
                 <p class="section-label">Get In Touch</p>
-                <h2>Start Your Tulum Journey</h2>
-                <p>Ready to explore investment opportunities in paradise? Schedule a complimentary consultation with our team. We'll discuss your goals and curate properties that match your criteria.</p>
+                <h2 data-i18n="contact.title">Ready to Invest in Paradise?</h2>
+                <p data-i18n="contact.desc">Ready to explore investment opportunities in paradise? Schedule a complimentary consultation with our team. We'll discuss your goals and curate properties that match your criteria.</p>
                 <div class="contact-item">
                     <div class="contact-icon">📧</div>
                     <div>
-                        <strong>Email</strong>
+                        <strong data-i18n="contact.email">Email</strong>
                         contact@tuluminatirealestate.com
                     </div>
                 </div>
                 <div class="contact-item">
                     <div class="contact-icon">📱</div>
                     <div>
-                        <strong>WhatsApp / iMessage / Calls</strong>
+                        <strong data-i18n="contact.phone">WhatsApp / iMessage / Calls</strong>
                         +52 998 370 2679
                     </div>
                 </div>
                 <div class="contact-item">
                     <div class="contact-icon">📍</div>
                     <div>
-                        <strong>Office</strong>
-                        Aldea Zama, Tulum, Quintana Roo, Mexico
+                        <strong data-i18n="contact.location">Location</strong>
+                        <span data-i18n="contact.address">Aldea Zama, Tulum, Quintana Roo, Mexico</span>
                     </div>
                 </div>
             </div>
-            <form class="contact-form">
-                <input type="text" placeholder="Full Name" required>
-                <input type="email" placeholder="Email Address" required>
-                <input type="tel" placeholder="Phone / WhatsApp">
-                <select>
-                    <option value="">Investment Budget</option>
+            <form class="contact-form" id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+                <input type="hidden" name="subject" value="New Lead from Tuluminati Real Estate Website">
+                <input type="hidden" name="from_name" value="Tuluminati Website">
+                <input type="hidden" name="redirect" value="https://tuluminatirealestate.com/?success=true">
+                <input type="text" name="name" data-i18n-placeholder="form.name" placeholder="Full Name" required>
+                <input type="email" name="email" data-i18n-placeholder="form.email" placeholder="Email Address" required>
+                <input type="tel" name="phone" data-i18n-placeholder="form.phone" placeholder="Phone / WhatsApp">
+                <select name="budget">
+                    <option value="" data-i18n="form.budget">Investment Budget</option>
                     <option value="100-250">$100,000 - $250,000</option>
                     <option value="250-500">$250,000 - $500,000</option>
                     <option value="500-1m">$500,000 - $1,000,000</option>
                     <option value="1m+">$1,000,000+</option>
                 </select>
-                <textarea placeholder="Tell us about your investment goals..."></textarea>
-                <button type="submit">Send Message</button>
+                <textarea name="message" data-i18n-placeholder="form.message" placeholder="Tell us about your investment goals..."></textarea>
+                <button type="submit" data-i18n="form.submit">Send Message</button>
+                <p class="form-status" id="formStatus" style="display:none; margin-top: 15px; padding: 10px; border-radius: 5px;"></p>
             </form>
         </div>
     </section>
@@ -2647,7 +2688,7 @@
         <div class="footer-grid">
             <div class="footer-brand">
                 <a href="#" class="logo">Tuluminati</a>
-                <p>Your trusted partner for luxury real estate investments in Tulum and the Riviera Maya. Over a decade of experience helping international investors achieve exceptional returns.</p>
+                <p data-i18n="footer.desc">Your trusted partner for luxury real estate investments in Tulum and the Riviera Maya. Over a decade of experience helping international investors achieve exceptional returns.</p>
             </div>
             <div>
                 <h4 class="footer-title">Quick Links</h4>
@@ -2678,7 +2719,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 Tuluminati Real Estate. All rights reserved.</p>
+            <p data-i18n="footer.rights">&copy; 2025 Tuluminati Real Estate. All rights reserved.</p>
             <div class="social-links">
                 <a href="#">FB</a>
                 <a href="#">IG</a>
@@ -2734,6 +2775,227 @@
 
         // Initial calculation
         calculateROI();
+
+        // ============================================
+        // TRANSLATION SYSTEM
+        // ============================================
+        const translations = {
+            en: {
+                // Navigation
+                "nav.destinations": "Destinations",
+                "nav.properties": "Properties",
+                "nav.beachfront": "Beachfront",
+                "nav.retirement": "Retirement",
+                "nav.services": "Services",
+                "nav.financing": "Financing",
+                "nav.contact": "Contact",
+                "nav.schedule": "Schedule Visit",
+
+                // Hero
+                "hero.subtitle": "Paradise in Mexico",
+                "hero.title": "Where Caribbean Dreams Meet Smart Investment",
+                "hero.desc": "Discover exceptional properties across Tulum, Playa del Carmen, Cancun, and the entire Riviera Maya. The Mexican Caribbean's #1 destination for international real estate investment.",
+                "hero.explore": "Explore Properties",
+                "hero.book": "Book Consultation",
+
+                // Contact Section
+                "contact.title": "Ready to Invest in Paradise?",
+                "contact.desc": "Ready to explore investment opportunities in paradise? Schedule a complimentary consultation with our team. We'll discuss your goals and curate properties that match your criteria.",
+                "contact.email": "Email",
+                "contact.phone": "WhatsApp / iMessage / Calls",
+                "contact.location": "Location",
+                "contact.address": "Aldea Zama, Tulum, Quintana Roo, Mexico",
+
+                // Form
+                "form.name": "Full Name",
+                "form.email": "Email Address",
+                "form.phone": "Phone / WhatsApp",
+                "form.budget": "Investment Budget",
+                "form.message": "Tell us about your investment goals...",
+                "form.submit": "Send Message",
+                "form.success": "Thank you! Your message has been sent successfully. We'll contact you soon.",
+                "form.error": "Oops! Something went wrong. Please try again or contact us directly.",
+
+                // Footer
+                "footer.rights": "© 2025 Tuluminati Real Estate. All rights reserved.",
+                "footer.desc": "Your trusted partner for luxury real estate investments in Tulum and the Riviera Maya. Over a decade of experience helping international investors achieve exceptional returns."
+            },
+            es: {
+                // Navigation
+                "nav.destinations": "Destinos",
+                "nav.properties": "Propiedades",
+                "nav.beachfront": "Frente al Mar",
+                "nav.retirement": "Retiro",
+                "nav.services": "Servicios",
+                "nav.financing": "Financiamiento",
+                "nav.contact": "Contacto",
+                "nav.schedule": "Agendar Visita",
+
+                // Hero
+                "hero.subtitle": "Paraíso en México",
+                "hero.title": "Donde los Sueños del Caribe se Encuentran con la Inversión Inteligente",
+                "hero.desc": "Descubre propiedades excepcionales en Tulum, Playa del Carmen, Cancún y toda la Riviera Maya. El destino #1 del Caribe Mexicano para inversión inmobiliaria internacional.",
+                "hero.explore": "Explorar Propiedades",
+                "hero.book": "Reservar Consulta",
+
+                // Contact Section
+                "contact.title": "¿Listo para Invertir en el Paraíso?",
+                "contact.desc": "¿Listo para explorar oportunidades de inversión en el paraíso? Agenda una consulta gratuita con nuestro equipo. Discutiremos tus objetivos y seleccionaremos propiedades que coincidan con tus criterios.",
+                "contact.email": "Correo Electrónico",
+                "contact.phone": "WhatsApp / iMessage / Llamadas",
+                "contact.location": "Ubicación",
+                "contact.address": "Aldea Zama, Tulum, Quintana Roo, México",
+
+                // Form
+                "form.name": "Nombre Completo",
+                "form.email": "Correo Electrónico",
+                "form.phone": "Teléfono / WhatsApp",
+                "form.budget": "Presupuesto de Inversión",
+                "form.message": "Cuéntanos sobre tus objetivos de inversión...",
+                "form.submit": "Enviar Mensaje",
+                "form.success": "¡Gracias! Tu mensaje ha sido enviado exitosamente. Te contactaremos pronto.",
+                "form.error": "¡Ups! Algo salió mal. Por favor intenta de nuevo o contáctanos directamente.",
+
+                // Footer
+                "footer.rights": "© 2025 Tuluminati Real Estate. Todos los derechos reservados.",
+                "footer.desc": "Tu socio de confianza para inversiones inmobiliarias de lujo en Tulum y la Riviera Maya. Más de una década de experiencia ayudando a inversionistas internacionales a lograr retornos excepcionales."
+            },
+            fr: {
+                // Navigation
+                "nav.destinations": "Destinations",
+                "nav.properties": "Propriétés",
+                "nav.beachfront": "Bord de Mer",
+                "nav.retirement": "Retraite",
+                "nav.services": "Services",
+                "nav.financing": "Financement",
+                "nav.contact": "Contact",
+                "nav.schedule": "Planifier une Visite",
+
+                // Hero
+                "hero.subtitle": "Paradis au Mexique",
+                "hero.title": "Où les Rêves des Caraïbes Rencontrent l'Investissement Intelligent",
+                "hero.desc": "Découvrez des propriétés exceptionnelles à Tulum, Playa del Carmen, Cancun et dans toute la Riviera Maya. La destination #1 des Caraïbes mexicaines pour l'investissement immobilier international.",
+                "hero.explore": "Explorer les Propriétés",
+                "hero.book": "Réserver une Consultation",
+
+                // Contact Section
+                "contact.title": "Prêt à Investir au Paradis?",
+                "contact.desc": "Prêt à explorer les opportunités d'investissement au paradis? Planifiez une consultation gratuite avec notre équipe. Nous discuterons de vos objectifs et sélectionnerons des propriétés correspondant à vos critères.",
+                "contact.email": "Courriel",
+                "contact.phone": "WhatsApp / iMessage / Appels",
+                "contact.location": "Emplacement",
+                "contact.address": "Aldea Zama, Tulum, Quintana Roo, Mexique",
+
+                // Form
+                "form.name": "Nom Complet",
+                "form.email": "Adresse Courriel",
+                "form.phone": "Téléphone / WhatsApp",
+                "form.budget": "Budget d'Investissement",
+                "form.message": "Parlez-nous de vos objectifs d'investissement...",
+                "form.submit": "Envoyer le Message",
+                "form.success": "Merci! Votre message a été envoyé avec succès. Nous vous contacterons bientôt.",
+                "form.error": "Oups! Une erreur s'est produite. Veuillez réessayer ou nous contacter directement.",
+
+                // Footer
+                "footer.rights": "© 2025 Tuluminati Real Estate. Tous droits réservés.",
+                "footer.desc": "Votre partenaire de confiance pour les investissements immobiliers de luxe à Tulum et dans la Riviera Maya. Plus d'une décennie d'expérience à aider les investisseurs internationaux à obtenir des rendements exceptionnels."
+            }
+        };
+
+        let currentLang = localStorage.getItem('lang') || 'en';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            // Update all elements with data-i18n attribute
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.dataset.i18n;
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+
+            // Update placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.dataset.i18nPlaceholder;
+                if (translations[lang] && translations[lang][key]) {
+                    el.placeholder = translations[lang][key];
+                }
+            });
+        }
+
+        // Initialize language switcher
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+        });
+
+        // Set initial language
+        setLanguage(currentLang);
+
+        // ============================================
+        // CONTACT FORM HANDLING
+        // ============================================
+        const contactForm = document.getElementById('contactForm');
+        const formStatus = document.getElementById('formStatus');
+
+        if (contactForm) {
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const submitBtn = contactForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = '...';
+                submitBtn.disabled = true;
+
+                try {
+                    const formData = new FormData(contactForm);
+                    const response = await fetch(contactForm.action, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                        formStatus.style.display = 'block';
+                        formStatus.style.background = '#d4edda';
+                        formStatus.style.color = '#155724';
+                        formStatus.textContent = translations[currentLang]['form.success'];
+                        contactForm.reset();
+                    } else {
+                        throw new Error('Form submission failed');
+                    }
+                } catch (error) {
+                    formStatus.style.display = 'block';
+                    formStatus.style.background = '#f8d7da';
+                    formStatus.style.color = '#721c24';
+                    formStatus.textContent = translations[currentLang]['form.error'];
+                }
+
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+
+                setTimeout(() => {
+                    formStatus.style.display = 'none';
+                }, 5000);
+            });
+        }
+
+        // Check for success redirect
+        if (window.location.search.includes('success=true')) {
+            if (formStatus) {
+                formStatus.style.display = 'block';
+                formStatus.style.background = '#d4edda';
+                formStatus.style.color = '#155724';
+                formStatus.textContent = translations[currentLang]['form.success'];
+            }
+            // Clean URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
     </script>
 </body>
 </html>
